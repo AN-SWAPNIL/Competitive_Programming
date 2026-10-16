@@ -1,0 +1,153 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=21mm,top=18mm,bottom=18mm]{geometry}
+\usepackage{fontspec}
+\usepackage{amsmath}
+\setmainfont{Lato}
+
+\usepackage{microtype}
+\usepackage[table]{xcolor}\usepackage{booktabs,tabularx,array}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+\usepackage{enumitem}
+\usepackage{ragged2e}
+\definecolor{ink}{HTML}{192535}
+\definecolor{accent}{HTML}{43368D}
+\definecolor{linkc}{HTML}{1D5AA0}
+\definecolor{muted}{HTML}{586779}
+\definecolor{rulec}{HTML}{DCE2EA}
+\definecolor{wash}{HTML}{F3F5F9}
+\definecolor{soft}{HTML}{F6F5FA}
+\hypersetup{colorlinks=true,urlcolor=linkc,linkcolor=linkc,
+ pdfauthor={Ahmmad Nur Swapnil},
+ pdftitle={CodeSprint 1.0 - Day 04 - Greedy Algorithms},
+ pdfsubject={Greedy algorithms with examples, Codeforces problems, and homework}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\tabcolsep}{6pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{{\color{muted}\footnotesize PUPC \quad CodeSprint 1.0 \quad / \quad Greedy Algorithms}}
+\fancyfoot[R]{{\color{muted}\footnotesize \thepage}}
+\setlength{\footskip}{18pt}
+\newcommand{\eyebrow}[1]{{\color{accent}\bfseries\fontsize{9.5}{12}\selectfont\MakeUppercase{#1}}\par}
+\newcommand{\pagetitle}[2]{\eyebrow{CodeSprint 1.0 / Day 04}\vspace{6pt}{\color{ink}\bfseries\fontsize{25}{29}\selectfont #1}\par\vspace{5pt}{\color{muted}\fontsize{10}{14}\selectfont #2}\par\vspace{10pt}{\color{rulec}\hrule height .75pt}\vspace{12pt}}
+\newcommand{\sect}[1]{\vspace{12pt}\Needspace{1.6cm}{\color{ink}\bfseries\fontsize{14}{18}\selectfont #1}\par\vspace{6pt}}
+\newcommand{\minor}[1]{\vspace{10pt}\Needspace{1.2cm}{\color{accent}\bfseries\fontsize{11.2}{15}\selectfont #1}\par\vspace{5pt}}
+\newcommand{\topic}[1]{\Needspace{1.2cm}\vspace{10pt}{\color{accent}\bfseries\fontsize{11.5}{15}\selectfont #1}\par\vspace{4pt}}
+\newcommand{\problem}[5]{%
+ \Needspace{.75cm}%
+ \noindent\makebox[26pt][l]{{\color{muted}\small #1.}}%
+ \href{https://codeforces.com/problemset/problem/#2/#3}{{\bfseries\color{linkc}#4}}%
+ \hspace{8pt}{\color{muted}\small #2#3}%
+ \hfill{\color{accent}\bfseries\small #5}\par\vspace{9pt}}
+\newcommand{\practice}[4]{%
+ \Needspace{.72cm}%
+ \noindent\href{https://codeforces.com/problemset/problem/#1/#2}{{\bfseries\color{linkc}#3}}%
+ \hspace{8pt}{\color{muted}\small #1#2}%
+ \hfill{\color{accent}\bfseries\small #4}\par\vspace{8pt}}
+\newcommand{\callout}[2]{\noindent\fcolorbox{rulec}{soft}{\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule-4pt}\vspace{7pt}\textbf{\color{ink}#1}\par\vspace{5pt}#2\par\vspace{7pt}\end{minipage}}\par}
+\begin{document}
+\eyebrow{PUPC / CodeSprint 1.0 / Day 04}
+\vspace{5pt}
+{\color{ink}\bfseries\fontsize{31}{36}\selectfont Greedy Algorithms}\par\vspace{5pt}
+{\color{muted}\small Saturday, 17 October 2026 \quad\textperiodcentered\quad 10:00 AM--2:00 PM \quad\textperiodcentered\quad Room 115}\par
+{\color{muted}\small Presidency University}\par\vspace{11pt}
+{\color{ink}\bfseries Ahmmad Nur Swapnil}\quad {\color{muted}\small Lecturer, Department of CSE, Presidency University}\par\vspace{3pt}
+{\color{muted}\small B.Sc. in CSE, BUET \quad\textperiodcentered\quad Codeforces Expert \quad\textperiodcentered\quad ICPC Asia Dhaka Regional 2023 Participant}\par\vspace{3pt}
+{\color{muted}\small Codeforces: \href{https://codeforces.com/profile/Ans2003}{Ans2003} \quad / \quad \href{https://codeforces.com/profile/Ans_Practice_2003}{Ans\_Practice\_2003}}\par\vspace{12pt}
+{\color{rulec}\hrule height .8pt}
+\sect{The greedy idea}
+A greedy algorithm repeatedly makes a \textbf{locally best feasible choice} and commits to it. It gives an optimal answer \textbf{only when the greedy choice can be justified}.\par
+\sect{Example 1: When greedy works}
+\textbf{Activity selection.} Choose the maximum number of non-overlapping meetings. Meetings that touch at endpoints are compatible.\par\vspace{5pt}
+\textbf{Greedy rule:} Sort meetings by finishing time; take the next one that starts after (or exactly when) the last selected meeting ends.\par\vspace{8pt}
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{wash}{white}
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}l l X l@{}}
+\rowcolor{soft}\textcolor{ink}{Meeting}&\textcolor{ink}{Time}&\textcolor{ink}{Decision (in finish-time order)}&\textcolor{ink}{Selected}\\\midrule
+A&[1,3)&Finish first&Yes\\
+B&[2,5)&Overlaps A&No\\
+C&[4,6)&Starts after A ends&Yes\\
+D&[6,8)&Starts when C ends&Yes\\
+E&[5,9)&Overlaps selected meetings&No\\
+F&[8,10)&Starts when D ends&Yes\\
+\bottomrule
+\end{tabularx}\par\vspace{10pt}
+\textbf{Result:} A $\rightarrow$ C $\rightarrow$ D $\rightarrow$ F: \textbf{4 meetings}.\par\vspace{3pt}
+{\color{muted}\small Why it works: An earliest-finishing available meeting leaves at least as much room for future meetings as any alternative first choice.}\par
+\sect{Example 2: When a greedy rule fails}
+\textbf{Coin change.} Coin denominations: $\{1,3,4\}$; target sum: $6$. Try choosing the largest coin that fits each time.\par\vspace{9pt}
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}p{28mm} X >{\RaggedLeft\arraybackslash}p{19mm}@{}}
+\rowcolor{wash}Largest-first&$6\rightarrow 4\; (2\text{ left})\rightarrow 1\; (1\text{ left})\rightarrow 1$&3 coins\\[5pt]
+Optimal&$3+3=6$&2 coins\\
+\end{tabularx}
+\vspace{10pt}
+\callout{Key point}{A locally appealing choice is not always optimal. \textbf{State your greedy rule, look for counterexamples, and justify why your choice is safe.} For arbitrary coin denominations, dynamic programming may be needed.}
+\vspace{10pt}
+{\color{accent}\bfseries Try a case where largest-first works:}\quad
+\href{https://codeforces.com/problemset/problem/996/A}{\bfseries\color{linkc}996A --- Hit the Lottery}
+\hfill{\color{accent}\bfseries\small 800}\\[-2pt]
+{\color{muted}\small Coin denominations: 1, 5, 10, 20, 100. A quick optional warm-up, not part of the guided set.}
+\newpage
+\pagetitle{Classroom problem solving}{8 guided problems (800--1100) \quad + \quad 1 special (1500) \quad + \quad 1 independent exercise (800). Click a title to open Codeforces.}
+\noindent{\color{ink}\bfseries A typical greedy workflow}\par\vspace{3pt}
+{\small \textbf{Preprocess} (sort/count) $\rightarrow$ \textbf{Choose and update} (greedy steps) $\rightarrow$ \textbf{Postprocess} (restore indices/output). Not every problem uses all three stages.}\par\vspace{4pt}
+{\color{muted}\small Example: in \emph{Restore the Weather}, sort, match in sorted order, then restore the original positions.}\par\vspace{4pt}
+{\small \textbf{Why is the choice safe?} Exchange: swap without loss. \quad Forced choice: alternatives cannot be optimal. \quad Invariant: maintain a useful property.}\par
+\vspace{3pt}{\color{rulec}\hrule height .55pt}
+\topic{01 / Feasibility and Resource Allocation}
+\problem{1}{1675}{A}{Food for Animals}{800}
+\topic{02 / Sorting, Extremes, and Exchange Greedy}
+\problem{2}{1843}{A}{Sasha and Array Coloring}{800}
+\problem{3}{1353}{B}{Two Arrays And Swaps}{800}
+\topic{03 / Sorting, Matching, and Index Restoration}
+\problem{4}{1833}{B}{Restore the Weather}{900}
+\topic{04 / Greedy Scans and Segment Boundaries}
+\problem{5}{1843}{B}{Long Long}{800}
+\problem{6}{1704}{B}{Luke is a Foodie}{1000}
+\topic{05 / Forced Greedy Decisions}
+\problem{7}{1675}{B}{Make It Increasing}{900}
+\topic{06 / Maximum Marginal Gain First}
+\problem{8}{1722}{D}{Line}{1100}
+\vspace{14pt}
+\noindent\fcolorbox{rulec}{soft}{\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule-4pt}\vspace{9pt}
+ {\color{accent}\bfseries SPECIAL CHALLENGE \quad / \quad Greedy Pairing and Two Pointers}\par\vspace{9pt}
+ \problem{9}{1690}{E}{Price Maximization}{1500}
+ \vspace{1pt}\end{minipage}}\par
+\vspace{15pt}
+\noindent\fcolorbox{rulec}{white}{\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule-4pt}\vspace{9pt}
+ {\color{accent}\bfseries SOLVE IT YOURSELF \quad / \quad Constructive Greedy}\par\vspace{9pt}
+ \problem{10}{1714}{C}{Minimum Varied Number}{800}
+ \vspace{1pt}\end{minipage}}\par
+\newpage
+\pagetitle{Practice at home}{18 additional Codeforces greedy problems (800--1200), grouped by technique.}
+\topic{01 / Feasibility and Priority Rules}
+\practice{1792}{A}{GamingForces}{800}
+\practice{1705}{A}{Mark the Photographer}{800}
+\practice{1690}{B}{Array Decrements}{800}
+\topic{02 / Sorting, Matching, and Construction}
+\practice{1790}{B}{Taisia and Dice}{800}
+\practice{1851}{B}{Parity Sort}{800}
+\practice{1697}{B}{Promo}{900}
+\practice{1689}{B}{Mystic Permutation}{900}
+\practice{1691}{B}{Shoe Shuffling}{1000}
+\practice{1676}{E}{Eating Queries}{1100}
+\topic{03 / Greedy Scans and Forced Operations}
+\practice{1690}{C}{Restoring the Duration of Tasks}{800}
+\practice{1705}{B}{Mark the Dust Sweeper}{900}
+\practice{1712}{C}{Sort Zero}{1100}
+\topic{04 / Greedy on Strings}
+\practice{1689}{A}{Lex String}{800}
+\practice{1666}{D}{Deletive Editing}{900}
+\practice{1837}{B}{Comparison String}{900}
+\topic{05 / Segments and Advanced Greedy}
+\practice{1696}{B}{NIT Destroys the Universe}{900}
+\practice{1831}{B}{Array merging}{1000}
+\practice{1704}{C}{Virus}{1200}
+\vspace{14pt}
+{\color{rulec}\hrule height .65pt}\vspace{8pt}
+{\color{muted}\small Selection primarily from the instructor's accepted Codeforces submissions. Two classic problems (1353B and 996A) are added for teaching clarity. All included problems have the greedy tag on Codeforces.}
+\end{document}

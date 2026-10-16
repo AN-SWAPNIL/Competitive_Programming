@@ -1,0 +1,6 @@
+[submodule "Competitive-Programming"]
+	path = Competitive-Programming
+	url = https://github.com/ncduy0303/Competitive-Programming
+[submodule "Competitive-Programming-A-Complete-Guideline"]
+	path = Competitive-Programming-A-Complete-Guideline
+	url = https://github.com/ShahjalalShohag/Competitive-Programming-A-Complete-Guideline
