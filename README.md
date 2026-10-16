@@ -1,8 +1,13 @@
 # Competitive Programming
 
-A compact C++ toolkit for contests: starter templates, editor snippets, tested
+A compact C++ toolkit for Competitive Programming contests: starter templates, editor snippets, tested
 implementations of common algorithms and data structures, and practice
 material.
+
+## My Codeforces Profiles
+
+- [Ans2003](https://codeforces.com/profile/Ans2003)
+- [Ans_Practice_2003](https://codeforces.com/profile/Ans_Practice_2003)
 
 ## What's included
 
